@@ -25,3 +25,8 @@ prisma push
 prisma migrate dev --name init
 python3 -m uvicorn main:app --reload
 ```
+
+## To-Do
+
+- 인증된 라우팅 경로 구현하기
+- Refresh Token 저장하기
