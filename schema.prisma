@@ -1,6 +1,6 @@
 generator client {
-  provider             = "prisma-client-py"
-  interface            = "asyncio"
+  provider  = "prisma-client-py"
+  interface = "asyncio"
 }
 
 datasource db {
@@ -9,10 +9,10 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
+  id Int @id @default(autoincrement())
   sub String @unique
-  email String  @unique
-  name  String
+  email String @unique
+  name String
   picture String
   login_at DateTime @default(now())
   created_at DateTime @default(now())
