@@ -21,8 +21,7 @@ export DB_URL=(본인의 값)=(본인의 값)
 
 ```commandline
 pip install -r requirements.txt
-prisma push
-prisma migrate dev --name init
+prisma db push
 python3 -m uvicorn main:app --reload
 ```
 
