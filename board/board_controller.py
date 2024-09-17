@@ -1,12 +1,14 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 import board.board_service as board
 from typing import List
+
+from auth.auth_service import check_user
 from board.dto.post_dto import PostCreateDTO, PostUpdateDTO, PostResponseDTO, PostListDTO
 
 router = APIRouter(prefix="/board", tags=["board"])
 
 @router.post("/posts", response_model=PostResponseDTO)
-async def create_post(request: PostCreateDTO):
+async def create_post(request: PostCreateDTO, user_id = Depends(check_user)):
     post = await board.create_post(request.title, request.content)
     return post
 

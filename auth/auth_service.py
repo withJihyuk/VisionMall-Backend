@@ -104,3 +104,9 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials= Depends(se
     sub = tokenHandler.decode_token(access_token)
     result = await db.user.find_unique(where={"sub": sub})
     return result
+
+async def check_user(credentials: HTTPAuthorizationCredentials= Depends(security)):
+    tokenHandler = TokenHandler()
+    access_token = credentials.credentials
+    sub = tokenHandler.decode_token(access_token)
+    return sub
