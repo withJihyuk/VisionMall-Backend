@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from auth import auth_controller as auth
+from board import board_controller as board
+
 from common.db import connect_db, disconnect_db
 import uvicorn
 from contextlib import asynccontextmanager
@@ -18,6 +20,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(auth.router)
+app.include_router(board.router)
 
 
 @app.get("/")
