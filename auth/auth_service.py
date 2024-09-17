@@ -61,6 +61,30 @@ async def register_or_login(user_dto: UserDto):
     access_token = token_handler.create_access_token(user_dto.sub)
     refresh_token = token_handler.create_refresh_token(user_dto.sub)
 
+    await db.refreshtoken.create(
+        data={"id": f"{user_dto.sub}.refresh", "token": refresh_token}
+    )
+
+    return JSONResponse(
+        status_code=200,
+        content={"access_token": access_token, "refresh_token": refresh_token},
+    )
+
+
+async def get_refreshed_token(refresh_token: str):
+    tokenHandler = TokenHandler()
+    sub = tokenHandler.decode_token(refresh_token)
+
+    result = await db.refreshtoken.find_first(
+        where={
+            "token": refresh_token,
+            "id": sub,
+        }
+    )
+
+    user_id = result.id.replace(".refresh", "")
+    access_token = tokenHandler.create_access_token(user_id)
+
     return JSONResponse(
         status_code=200,
         content={"access_token": access_token, "refresh_token": refresh_token},

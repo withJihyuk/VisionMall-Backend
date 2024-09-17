@@ -13,3 +13,8 @@ async def verify_id_token(code: str):
 @router.get("/login")
 async def get_login_link():
     return auth.get_login_url()
+
+
+@router.put("/refresh")
+async def get_refresh_token(refresh_token: str):
+    return await auth.get_refreshed_token(refresh_token)

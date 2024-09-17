@@ -32,4 +32,5 @@ class TokenHandler:
 
     def create_refresh_token(self, user_id: str):
         sub = f"{user_id}.refresh"
-        return self.encode_token(sub, self.refresh_expires)
+        token = self.encode_token(sub, self.refresh_expires)
+        return token
