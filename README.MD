@@ -16,7 +16,7 @@ export ALGORITHM=(본인의 값)
 export GOOGLE_CLIENT_ID=(본인의 값)
 export GOOGLE_REDIRECT_URI=(본인의 값)
 export GOOGLE_REDIRECT_URL=(본인의 값)
-export DB_URL=(본인의 값)=(본인의 값)
+export DB_URL=(본인의 값)
 ```
 
 ```commandline
