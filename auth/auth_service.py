@@ -3,6 +3,8 @@ from google.oauth2 import id_token
 from google.auth.transport import requests
 from google_auth_oauthlib.flow import InstalledAppFlow
 from starlette.responses import JSONResponse
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi import Depends
 
 from common.exception import unauthorized
 from common.db import db
@@ -25,6 +27,7 @@ SCOPES = [
     "https://www.googleapis.com/auth/userinfo.profile",
 ]
 flow = InstalledAppFlow.from_client_config(client_config, scopes=SCOPES)
+security = HTTPBearer()
 
 
 def get_login_url():
@@ -61,8 +64,12 @@ async def register_or_login(user_dto: UserDto):
     access_token = token_handler.create_access_token(user_dto.sub)
     refresh_token = token_handler.create_refresh_token(user_dto.sub)
 
-    await db.refreshtoken.create(
-        data={"id": f"{user_dto.sub}.refresh", "token": refresh_token}
+    await db.refreshtoken.upsert(
+        where={"id": f"{user_dto.sub}.refresh"},
+        data={
+            "create": {"id": f"{user_dto.sub}.refresh", "token": refresh_token},
+            "update": {"token": refresh_token},
+        },
     )
 
     return JSONResponse(
@@ -89,3 +96,11 @@ async def get_refreshed_token(refresh_token: str):
         status_code=200,
         content={"access_token": access_token, "refresh_token": refresh_token},
     )
+
+
+async def get_current_user(credentials: HTTPAuthorizationCredentials= Depends(security)):
+    tokenHandler = TokenHandler()
+    access_token = credentials.credentials
+    sub = tokenHandler.decode_token(access_token)
+    result = await db.user.find_unique(where={"sub": sub})
+    return result
