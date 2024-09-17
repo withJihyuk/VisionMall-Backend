@@ -26,5 +26,5 @@ python3 -m uvicorn main:app --reload
 ```
 
 ## To-Do
-
-- 인증된 라우팅 경로 구현하기 + CRUD
+- 인증된 라우팅 구현
+- select가 작동하지 않는 이슈 해결
