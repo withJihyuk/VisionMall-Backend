@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends
 import auth.auth_service as auth
 from auth.auth_service import get_current_user
+from auth.dto.refresh_token_dto import RefreshTokenDto
 from auth.dto.user_dto import UserDto
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -17,9 +18,9 @@ async def get_login_link():
     return auth.get_login_url()
 
 
-@router.put("/refresh")
-async def get_refresh_token(refresh_token: str):
-    return await auth.get_refreshed_token(refresh_token)
+@router.post("/refresh")
+async def get_refresh_token(request: RefreshTokenDto):
+    return await auth.get_refreshed_token(request.refresh_token)
 
 
 @router.get("/user")
