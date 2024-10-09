@@ -1,4 +1,4 @@
-FROM python:alpine3.19
+FROM python3.13-nodejs22-alpine
 
 WORKDIR /app
 
