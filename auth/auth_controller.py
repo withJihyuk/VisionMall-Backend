@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 import auth.auth_service as auth
 from auth.auth_service import get_current_user
-from auth.dto.refresh_token_dto import RefreshTokenDto
-from auth.dto.user_dto import UserDto
+from auth.common.dto.refresh_token_dto import RefreshTokenDto
+from auth.common.dto.user_dto import UserDto
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
