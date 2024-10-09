@@ -8,26 +8,82 @@ datasource db {
   url      = env("DB_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  sub String @unique
-  email String @unique
-  name String
-  picture String
-  login_at DateTime @default(now())
-  created_at DateTime @default(now())
+// 모델 정의
+
+model Users {
+  id          Int      @id @default(autoincrement())
+  sub         String   @unique
+  email       String   @unique
+  name        String
+  picture     String
+  reviews     Reviews[]
+  cart        Carts[]
+  order       Orders[]
+  login_at    DateTime @default(now())
+  created_at  DateTime @default(now())
 }
 
-model RefreshToken {
-  id String @id
-  token String @unique
-  expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '14 days'"))
+model RefreshTokens {
+  id         String   @id
+  token      String   @unique
+  expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '7 days'"))
 }
 
-model Board {
+model Products {
   id        Int      @id @default(autoincrement())
+  price     Int
+  rating    Float
   title     String
   content   String
+  status    ProductStatus
+  cart      Carts[]
+  order     Orders[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Reviews {
+  id        Int      @id @default(autoincrement())
+  price     Int
+  rating    Float
+  title     String
+  content   String
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Orders {
+  count     Int
+  status    OrderStatus
+  user      Users    @relation(fields: [userId], references: [id])
+  userId    Int      @id
+  product   Products @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+model Carts {
+  user      Users      @relation(fields: [userId], references: [id])
+  userId    Int        @id
+  product   Products[]
+  productId Int
+}
+
+// 타입 정의
+
+enum ProductStatus {
+  ON_SALE
+  SOLD_OUT
+}
+
+enum OrderStatus {
+  PENDING         // 주문이 접수되었지만 아직 처리되지 않은 상태
+  CONFIRMED       // 주문이 확인된 상태
+  PROCESSING      // 주문이 처리 중인 상태 (예: 제품 준비 중)
+  SHIPPED         // 주문이 발송된 상태
+  DELIVERED       // 고객에게 배송이 완료된 상태
+  CANCELED        // 주문이 취소된 상태
+  RETURNED        // 주문이 반품된 상태
+  REFUNDED        // 환불이 완료된 상태
 }
