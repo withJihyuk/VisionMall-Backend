@@ -6,5 +6,4 @@ COPY . /app
 
 RUN pip install -r requirements.txt
 
-CMD ["prisma", "generate"]
-CMD ["python", "main.py"]
+CMD ["prisma generate & python main.py"]
