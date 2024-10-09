@@ -10,7 +10,7 @@ def analyze_image(base64_image):
         {
           "role": "user",
           "content": [
-            {"type": "text", "text": "What’s in this image?"},
+            {"type": "text", "text": "Provide detailed descriptions of clothing in photos for visually impaired individuals in Korean."},
               {"type": "image_url", "image_url": {
                   "url": f"data:image/png;base64,{base64_image}"}
                }
