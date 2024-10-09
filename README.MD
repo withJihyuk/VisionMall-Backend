@@ -11,7 +11,6 @@ export GPT_API_KEY=(본인의 값)
 ```
 
 ```commandline
-pip install -r requirements.txt
-prisma db push
-python3 main.py
+docker-compose up -d
+docker-compose down
 ```
