@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       network: host
-    command: sh -c "prisma generate & python main.py"
+    command: python main.py
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - ALGORITHM=${ALGORITHM}
