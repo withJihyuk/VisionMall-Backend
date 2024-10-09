@@ -73,8 +73,8 @@ model Carts {
 // 타입 정의
 
 enum ProductStatus {
-  ON_SALE
-  SOLD_OUT
+  ON_SALE     // 판매중
+  SOLD_OUT    // 매진
 }
 
 enum OrderStatus {
