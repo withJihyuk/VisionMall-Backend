@@ -1,4 +1,4 @@
-FROM python3.13-nodejs22-alpine
+FROM nikolaik/python3.13-nodejs22-alpine
 
 WORKDIR /app
 
