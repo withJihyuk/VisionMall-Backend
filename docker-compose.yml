@@ -3,6 +3,7 @@ services:
   docker-fastapi:
     container_name: VisionMall_Backend
     build:
+      context: .
       dockerfile: Dockerfile
     command: python main.py
     environment:
