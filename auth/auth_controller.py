@@ -23,6 +23,6 @@ async def get_refresh_token(request: RefreshTokenDto):
     return await auth.get_refreshed_token(request.refresh_token)
 
 
-@router.get("/user")
-async def user_info(user: UserDto = Depends(get_current_user)):
-    return user
+# @router.get("/user")
+# async def user_info(user: UserDto = Depends(get_current_user)):
+#     return user
