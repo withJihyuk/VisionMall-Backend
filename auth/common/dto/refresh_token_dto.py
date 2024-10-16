@@ -6,6 +6,4 @@ class RefreshTokenDto(BaseModel):
 
 
 def create_refresh_token_dto(data: dict) -> RefreshTokenDto:
-    return RefreshTokenDto(
-        refresh_token=data["refresh_token"]
-    )
+    return RefreshTokenDto(refresh_token=data["refresh_token"])

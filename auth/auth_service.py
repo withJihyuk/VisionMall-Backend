@@ -72,13 +72,16 @@ async def get_refreshed_token(refresh_token: str):
     )
 
 
-async def get_current_user(credentials: HTTPAuthorizationCredentials= Depends(security)):
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+):
     access_token = credentials.credentials
     sub = TokenHandler().decode_token(access_token)
     result = await db.users.find_unique(where={"sub": sub})
     return result
 
-async def check_user(credentials: HTTPAuthorizationCredentials= Depends(security)):
+
+async def check_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     access_token = credentials.credentials
     sub = TokenHandler().decode_token(access_token)
     return sub

@@ -1,16 +1,11 @@
-from itertools import product
-
 from fastapi import FastAPI
+import uvicorn
+from contextlib import asynccontextmanager
 
-import analyze.analyze_controller
 from auth import auth_controller as auth
 from product import product_controller as board
 from analyze import analyze_controller as analyze
-
-
 from common.db import connect_db, disconnect_db
-import uvicorn
-from contextlib import asynccontextmanager
 
 
 @asynccontextmanager
@@ -28,6 +23,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(auth.router)
 app.include_router(board.router)
 app.include_router(analyze.router)
+
 
 @app.get("/")
 async def root():
