@@ -16,6 +16,8 @@ model Users {
   email       String   @unique
   name        String
   picture     String
+  zipCode     String
+  address     String
   reviews     Reviews[]
   cart        Carts[]
   order       Orders[]
