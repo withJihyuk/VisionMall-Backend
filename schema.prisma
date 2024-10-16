@@ -21,13 +21,13 @@ model Users {
   order       Orders[]
   login_at    DateTime @default(now())
   created_at  DateTime @default(now())
-}
+} // 나중에 주소를 별칭으로 관리 할 수 있도록 별도 테이블로 분리 가능
 
 model RefreshTokens {
   id         String   @id
   token      String   @unique
   expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '7 days'"))
-}
+} // 만료 시간 고려 필요
 
 model Products {
   id        Int      @id @default(autoincrement())
@@ -40,7 +40,7 @@ model Products {
   order     Orders[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
+} // 암시적 N:N 문제 해결 필요, 중간 테이블이 최선인듯
 
 model Reviews {
   id        Int      @id @default(autoincrement())
