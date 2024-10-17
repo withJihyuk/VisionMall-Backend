@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 
 from analyze.analyze_service import analyze_image
-from auth.auth_service import check_user
 from analyze.dto.analyze_dto import AnalyzeRequestDTO
+from utils.token_handler import check_user
+
 router = APIRouter(prefix="/analyze", tags=["analyze"])
 
 

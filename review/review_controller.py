@@ -1,6 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends
-
+from fastapi import APIRouter, Depends, HTTPException
 import review.review_service as review
 from review.ReviewDto import CreateReviewReqeustDto
 from utils.token_handler import check_user
@@ -10,7 +9,10 @@ router = APIRouter(prefix="/review", tags=["review"])
 
 @router.get("/reviews/{product_id}", response_model=List[CreateReviewReqeustDto])
 async def get_reviews_by_product_id(product_id: int):
-    return await review.get_review(product_id)
+    result = await review.get_review(product_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="상품을 찾을 수 없어요.")
+    return result
 
 @router.post("/reviews/{product_id}")
 async def post_reviews_by_product_id(request:CreateReviewReqeustDto, user_id: int = Depends(check_user)):

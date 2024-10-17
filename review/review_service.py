@@ -14,9 +14,8 @@ async def create_review(request: CreateReviewReqeustDto, user_id: int):
 
 
 async def get_review(product_id: int):
-    return await db.products.find_many(
-        {"productId": product_id}
-    )
+    result = await db.products.find_many(where = {'OR': [{"id": product_id}]})
+    return result
 
 
 async def delete_review(review_id: int, user_id: int):
