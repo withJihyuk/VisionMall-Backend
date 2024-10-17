@@ -7,6 +7,6 @@ from analyze.dto.analyze_dto import AnalyzeResponseDTO, AnalyzeRequestDTO
 router = APIRouter(prefix="/analyze", tags=["analyze"])
 
 
-@router.post("/analyze", response_model=AnalyzeResponseDTO)
-async def get_products(request: AnalyzeRequestDTO):
+@router.post("/analyze")
+def get_products(request: AnalyzeRequestDTO):
     return analyze_image(request.image)
