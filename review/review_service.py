@@ -4,6 +4,14 @@ from review.ReviewDto import CreateReviewReqeustDto
 
 
 async def create_review(request: CreateReviewReqeustDto, user_id: int):
+    check_user_bought = db.orders.find_many(
+        where={'OR': [
+            {"userId": user_id},
+            {"productId": request.product_id}
+        ]}
+    )
+    if not check_user_bought:
+        return JSONResponse(status_code=400, content="구매한 상품에만 리뷰를 작성 할 수 있어요.")
     await db.products.create(data={
         "rating": request.rating,
         "content": request.content,
