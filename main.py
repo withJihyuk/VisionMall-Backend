@@ -7,8 +7,6 @@ from product import product_controller as board
 from review import review_controller as review
 from analyze import analyze_controller as analyze
 from common.db import connect_db, disconnect_db
-from prometheus_fastapi_instrumentator import Instrumentator
-
 
 
 @asynccontextmanager
@@ -35,4 +33,4 @@ async def root():
 
 
 if __name__ == "__main__":
-    uvicorn.run(Instrumentator().instrument(app).expose(app), host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
