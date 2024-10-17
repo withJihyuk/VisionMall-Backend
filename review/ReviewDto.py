@@ -4,7 +4,6 @@ from pydantic import BaseModel
 class CreateReviewReqeustDto(BaseModel):
     rating: int
     content: str
-    userId: int
     productId: int
 
 def create_review_dto(data: dict) -> CreateReviewReqeustDto:
