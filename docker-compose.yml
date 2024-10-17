@@ -34,7 +34,7 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
     depends_on:
-      - fastapi
+      - nginx
 
   grafana:
     image: grafana/grafana
