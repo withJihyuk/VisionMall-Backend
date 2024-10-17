@@ -1,9 +1,12 @@
 import os
 from typing import Union
 from datetime import datetime, timedelta
+from fastapi import Depends
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import jwt
 from common.exception import unauthorized
 
+security = HTTPBearer()
 
 class TokenHandler:
     secret = os.environ.get("SECRET_KEY")
@@ -34,3 +37,8 @@ class TokenHandler:
         sub = f"{user_id}.refresh"
         token = self.encode_token(sub, self.refresh_expires)
         return token
+
+def check_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    access_token = credentials.credentials
+    sub = TokenHandler().decode_token(access_token)
+    return sub

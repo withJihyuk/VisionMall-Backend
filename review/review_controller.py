@@ -2,8 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends
 
 import review.review_service as review
-from auth.auth_service import check_user
 from review.ReviewDto import CreateReviewReqeustDto
+from utils.token_handler import check_user
 
 router = APIRouter(prefix="/review", tags=["review"])
 
