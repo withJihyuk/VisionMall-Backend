@@ -8,5 +8,5 @@ router = APIRouter(prefix="/analyze", tags=["analyze"])
 
 
 @router.post("/analyze")
-def get_products(request: AnalyzeRequestDTO):
+def analyze_product(request: AnalyzeRequestDTO):
     return analyze_image(request.image)
