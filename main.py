@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from auth import auth_controller as auth
 from product import product_controller as board
+from review import review_controller as review
 from analyze import analyze_controller as analyze
 from common.db import connect_db, disconnect_db
 
@@ -21,6 +22,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(auth.router)
+app.include_router(review.router)
 app.include_router(board.router)
 app.include_router(analyze.router)
 
