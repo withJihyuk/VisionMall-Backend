@@ -6,6 +6,7 @@ from auth import auth_controller as auth
 from product import product_controller as board
 from review import review_controller as review
 from analyze import analyze_controller as analyze
+from order import order_controller as order
 from common.db import connect_db, disconnect_db
 
 
@@ -25,7 +26,7 @@ app.include_router(auth.router)
 app.include_router(review.router)
 app.include_router(board.router)
 app.include_router(analyze.router)
-
+app.include_router(order.router)
 
 @app.get("/")
 async def root():
