@@ -9,6 +9,7 @@ datasource db {
 }
 
 // 모델 정의
+// TO-DO int autoincrement() 사용에 따른 유저 특정 가능 이슈 해결
 
 model Users {
   id          Int      @id @default(autoincrement())
@@ -56,10 +57,11 @@ model Reviews {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([userId, productId]) // 중복 리뷰 작성 방지
+  @@unique([userId, productId]) // 중복 리뷰 작성 방지 | orderId 기반으로 다시 리팩토링
 }
 
 model Orders {
+  id        Int      @id @default(autoincrement())
   count     Int
   status    OrderStatus
   user      Users    @relation(fields: [userId], references: [id])
@@ -68,7 +70,6 @@ model Orders {
   productId Int
   zipCode   String
   address   String
-  @@id([userId, productId])
 }
 
 model Carts {
