@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class CreateReviewReqeustDto(BaseModel):
     rating: int
+    userId: int
     content: str
     productId: int
 

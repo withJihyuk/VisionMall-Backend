@@ -1,7 +1,7 @@
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 import review.review_service as review
-from review.ReviewDto import CreateReviewReqeustDto
+from review.review_dto import CreateReviewReqeustDto
 from utils.token_handler import check_user
 
 router = APIRouter(prefix="/review", tags=["review"])

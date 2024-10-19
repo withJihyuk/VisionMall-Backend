@@ -1,6 +1,6 @@
 from starlette.responses import JSONResponse
 from common.db import db
-from review.ReviewDto import CreateReviewReqeustDto
+from review.review_dto import CreateReviewReqeustDto
 
 
 async def create_review(request: CreateReviewReqeustDto, user_id: int):
