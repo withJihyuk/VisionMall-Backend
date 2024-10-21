@@ -8,8 +8,8 @@ router = APIRouter(prefix="/order", tags=["order"])
 
 
 @router.get("/order", response_model=List[CreateOrderReqeustDto])
-def get_order(order_id: int):
-    return order.get_order_list(order_id)
+def get_orders(user_id: int = Depends(check_user)):
+    return order.get_order_list(user_id)
 
 @router.post("/order")
 def create_order(request:CreateOrderReqeustDto, user_id: int = Depends(check_user)):
