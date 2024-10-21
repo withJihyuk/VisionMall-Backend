@@ -9,7 +9,15 @@ datasource db {
 }
 
 // 모델 정의
-// TO-DO int autoincrement() 사용에 따른 유저 특정 가능 이슈 해결
+
+// TO-DO
+// int autoincrement() 사용에 따른 유저 특정 가능 이슈 해결
+// 주소 테이블 분리
+// 상품 구매시 장바구니에서 상품 제거
+// 평점 계산해서 구하기
+// 옵션 테이블 필요?
+
+// 계정 도메인
 
 model Users {
   id          Int      @id @default(autoincrement())
@@ -20,17 +28,19 @@ model Users {
   zipCode     String?
   address     String?
   reviews     Reviews[]
-  cart        Carts[]
+  cart        Carts?
   order       Orders[]
   login_at    DateTime @default(now())
   created_at  DateTime @default(now())
-} // 나중에 주소를 별칭으로 관리 할 수 있도록 별도 테이블로 분리 가능
+}
 
 model RefreshTokens {
   id         String   @id
   token      String   @unique
   expires_at DateTime @default(dbgenerated("NOW() + INTERVAL '7 days'"))
-} // 만료 시간 고려 필요
+}
+
+// 주 도메인
 
 model Products {
   id        Int      @id @default(autoincrement())
@@ -41,33 +51,39 @@ model Products {
   status    ProductStatus
   cart      Carts[]
   order     Orders[]
-  reviews   Reviews[]
+  option    Options[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-} // 암시적 N:N 문제 해결 필요, 중간 테이블이 최선인듯
+}
+
+model Options {
+  id            Int       @id
+  product       Products  @relation(fields: [productId], references: [id])
+  productId     Int       @unique
+  name          String
+}
 
 model Reviews {
   id        Int      @id @default(autoincrement())
   rating    Float
   content   String
-  product   Products @relation(fields: [productId], references: [id])
-  productId Int
+  order     Orders   @relation(fields: [orderId], references: [id])
+  orderId   Int      @unique
   user      Users    @relation(fields: [userId], references: [id])
-  userId    Int
+  userId    Int      @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  @@unique([userId, productId]) // 중복 리뷰 작성 방지 | orderId 기반으로 다시 리팩토링
 }
 
 model Orders {
-  id        Int      @id @default(autoincrement())
+  id        Int          @id @default(autoincrement())
   count     Int
   status    OrderStatus
-  user      Users    @relation(fields: [userId], references: [id])
-  userId    Int
-  product   Products @relation(fields: [productId], references: [id])
-  productId Int
+  user      Users        @relation(fields: [userId], references: [id])
+  userId    Int          @unique
+  product   Products     @relation(fields: [productId], references: [id])
+  productId Int          @unique
+  review    Reviews?
   zipCode   String
   address   String
 }
@@ -75,8 +91,8 @@ model Orders {
 model Carts {
   user      Users      @relation(fields: [userId], references: [id])
   userId    Int        @id
-  product   Products[]
-  productId Int
+  product   Products   @relation(fields: [productId], references: [id])
+  productId Int        @unique
 }
 
 // 타입 정의
@@ -95,4 +111,11 @@ enum OrderStatus {
   CANCELED        // 주문이 취소된 상태
   RETURNED        // 주문이 반품된 상태
   REFUNDED        // 환불이 완료된 상태
+}
+
+enum Size {
+  S
+  M
+  L
+  XL
 }
