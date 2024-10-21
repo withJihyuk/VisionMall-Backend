@@ -8,6 +8,7 @@ from common.exception import unauthorized
 
 security = HTTPBearer()
 
+
 class TokenHandler:
     secret = os.environ.get("SECRET_KEY")
     algorithm = os.environ.get("ALGORITHM")
@@ -37,6 +38,7 @@ class TokenHandler:
         sub = f"{user_id}.refresh"
         token = self.encode_token(sub, self.refresh_expires)
         return token
+
 
 def check_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     access_token = credentials.credentials

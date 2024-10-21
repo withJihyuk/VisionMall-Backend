@@ -1,12 +1,14 @@
 from prisma.enums import OrderStatus
 from pydantic import BaseModel
 
+
 class CreateOrderReqeustDto(BaseModel):
     productId: int
     count: int
     status: OrderStatus = OrderStatus.PENDING
     zipCode: str
     address: str
+
 
 class GetOrderReqeustDto(BaseModel):
     productId: int
@@ -16,7 +18,7 @@ class GetOrderReqeustDto(BaseModel):
 
 def order_to_response_body(data: dict) -> GetOrderReqeustDto:
     return GetOrderReqeustDto(
-        productId=data['productId'],
-        count=data['count'],
-        status=data['status'],
+        productId=data["productId"],
+        count=data["count"],
+        status=data["status"],
     )

@@ -11,12 +11,15 @@ router = APIRouter(prefix="/order", tags=["order"])
 def get_orders(user_id: int = Depends(check_user)):
     return order.get_order_list(user_id)
 
+
 @router.post("/order")
-def create_order(request:CreateOrderReqeustDto, user_id: int = Depends(check_user)):
+def create_order(request: CreateOrderReqeustDto, user_id: int = Depends(check_user)):
     return order.create_order(request, user_id)
+
 
 @router.post("/order/{order_id}")
 def cancel_order(order_id: int, user_id: int = Depends(check_user)):
     return order.cancel_order(order_id, user_id)
+
 
 # 환불, 교환 제작 필요 -> user_id 받기

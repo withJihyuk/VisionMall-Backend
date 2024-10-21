@@ -11,12 +11,18 @@ router = APIRouter(prefix="/review", tags=["review"])
 async def get_reviews_by_product_id(product_id: int):
     result = await review.get_review(product_id)
     if not result:
-        raise HTTPException(status_code=404, detail="상품을 찾을 수 없거나 리뷰가 아직 없어요.")
+        raise HTTPException(
+            status_code=404, detail="상품을 찾을 수 없거나 리뷰가 아직 없어요."
+        )
     return result
 
+
 @router.post("/reviews/{product_id}")
-async def post_reviews_by_product_id(request:CreateReviewReqeustDto, user_id: int = Depends(check_user)):
+async def post_reviews_by_product_id(
+    request: CreateReviewReqeustDto, user_id: int = Depends(check_user)
+):
     return await review.create_review(request, user_id)
+
 
 @router.delete("/reviews/{review_id}")
 async def delete_reviews_by_id(review_id: int, user_id: int = Depends(check_user)):

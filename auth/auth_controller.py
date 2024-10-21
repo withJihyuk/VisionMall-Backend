@@ -20,4 +20,5 @@ async def get_login_link():
 async def get_refresh_token(request: RefreshTokenDto):
     return await auth.get_refreshed_token(request.refresh_token)
 
+
 # TODO - 유저 정보 엔드포인트 제작하기
