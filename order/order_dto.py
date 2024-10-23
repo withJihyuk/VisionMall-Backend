@@ -7,6 +7,7 @@ class CreateOrderReqeustDto(BaseModel):
     count: int
     status: OrderStatus = OrderStatus.PENDING
     zipCode: str
+    optionId: int
     address: str
 
 

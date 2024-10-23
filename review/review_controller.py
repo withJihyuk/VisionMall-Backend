@@ -19,11 +19,11 @@ async def get_reviews_by_product_id(product_id: int):
 
 @router.post("/reviews/{product_id}")
 async def post_reviews_by_product_id(
-    request: CreateReviewReqeustDto, user_id: int = Depends(check_user)
+    request: CreateReviewReqeustDto, user_id: str = Depends(check_user)
 ):
-    return await review.create_review(request, user_id)
+    return await review.create_review(request, int(user_id))
 
 
 @router.delete("/reviews/{review_id}")
-async def delete_reviews_by_id(review_id: int, user_id: int = Depends(check_user)):
-    return await review.delete_review(review_id, user_id)
+async def delete_reviews_by_id(review_id: int, user_id: str = Depends(check_user)):
+    return await review.delete_review(review_id, int(user_id))

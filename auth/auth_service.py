@@ -35,18 +35,18 @@ def verify_id_token(auth_code: str):
 
 async def register_or_login(user_dto: UserDto):
     token_handler = TokenHandler()
-    await db.users.upsert(
+    result = await db.users.upsert(
         where={
             "email": user_dto.email,
         },
         data={"create": dict(user_dto), "update": dict(user_dto)},
     )
-    access_token = token_handler.create_access_token(user_dto.sub)
-    refresh_token = token_handler.create_refresh_token(user_dto.sub)
+    access_token = token_handler.create_access_token(str(result.id))
+    refresh_token = token_handler.create_refresh_token(str(result.id))
     await db.refreshtokens.upsert(
-        where={"id": f"{user_dto.sub}.refresh"},
+        where={"id": f"{result.id}.refresh"},
         data={
-            "create": {"id": f"{user_dto.sub}.refresh", "token": refresh_token},
+            "create": {"id": f"{result.id}.refresh", "token": refresh_token},
             "update": {"token": refresh_token},
         },
     )
