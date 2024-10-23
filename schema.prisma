@@ -27,7 +27,7 @@ model Users {
   zipCode     String?
   address     String?
   reviews     Reviews[]
-  cart        Carts?
+  // cart        Carts?
   order       Orders[]
   login_at    DateTime @default(now())
   created_at  DateTime @default(now())
@@ -48,11 +48,9 @@ model Products {
   title     String
   content   String
   status    ProductStatus
-  cart      Carts[]
+  // cart      Carts[]
   order     Orders[]
   option    Options[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Options {
@@ -60,6 +58,11 @@ model Options {
   product       Products  @relation(fields: [productId], references: [id])
   productId     Int       @unique
   name          String
+  shoulder      Float?      // 어깨너비
+  towPiece      Float?      // 총장
+  chest         Float?      // 가슴면
+  sleeve        Float?      // 소매
+  orders        Orders[]
 }
 
 model Reviews {
@@ -71,7 +74,6 @@ model Reviews {
   user      Users    @relation(fields: [userId], references: [id])
   userId    Int      @unique
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
 
 model Orders {
@@ -82,17 +84,19 @@ model Orders {
   userId    Int          @unique
   product   Products     @relation(fields: [productId], references: [id])
   productId Int          @unique
+  option    Options      @relation(fields: [optionId], references: [id])
+  optionId  Int          @unique
   review    Reviews?
   zipCode   String
   address   String
 }
 
-model Carts {
-  user      Users      @relation(fields: [userId], references: [id])
-  userId    Int        @id
-  product   Products   @relation(fields: [productId], references: [id])
-  productId Int        @unique
-}
+// model Carts {
+//   user      Users      @relation(fields: [userId], references: [id])
+//   userId    Int        @id
+//   product   Products   @relation(fields: [productId], references: [id])
+//   productId Int        @unique
+// }
 
 // 타입 정의
 
@@ -110,11 +114,4 @@ enum OrderStatus {
   CANCELED        // 주문이 취소된 상태
   RETURNED        // 주문이 반품된 상태
   REFUNDED        // 환불이 완료된 상태
-}
-
-enum Size {
-  S
-  M
-  L
-  XL
 }
