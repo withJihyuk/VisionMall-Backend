@@ -49,6 +49,7 @@ model Products {
   content   String
   status    ProductStatus
   // cart      Carts[]
+  review    Reviews[]
   order     Orders[]
   option    Options[]
 }
@@ -73,6 +74,8 @@ model Reviews {
   orderId   Int      @unique
   user      Users    @relation(fields: [userId], references: [id])
   userId    Int      @unique
+  product   Products @relation(fields: [productId], references: [id])
+  productId Int      @unique
   createdAt DateTime @default(now())
 }
 
