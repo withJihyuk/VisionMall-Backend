@@ -1,6 +1,8 @@
+from typing import List
+
 from fastapi import APIRouter, HTTPException
 import product.product_service as product
-from product.dto.product_dto import ProductResponseDTO
+from product.dto.product_dto import ProductResponseDTO, create_product_list
 
 router = APIRouter(prefix="/product", tags=["product"])
 
@@ -13,6 +15,6 @@ async def get_products(products_id: int):
     return products
 
 
-@router.get("/products")
+@router.get("/products", response_model=List[ProductResponseDTO])
 async def get_all_products():
-    return await product.get_all_product()
+    return create_product_list(await product.get_all_product())
