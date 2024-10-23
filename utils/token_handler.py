@@ -15,7 +15,7 @@ class TokenHandler:
     access_expires = timedelta(hours=2)
     refresh_expires = timedelta(days=14)
 
-    def encode_token(self, sub: Union[int, str], expires: timedelta):
+    def encode_token(self, sub: str, expires: timedelta):
         payload = {
             "exp": datetime.now() + expires,
             "iat": datetime.now(),
@@ -24,11 +24,9 @@ class TokenHandler:
         return jwt.encode(payload, self.secret, self.algorithm)
 
     def decode_token(self, token: str):
-        try:
             payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
+            print(payload)
             return payload["sub"]
-        except Exception:
-            raise unauthorized
 
     def create_access_token(self, user_id: str):
         sub = user_id
