@@ -44,9 +44,9 @@ async def register_or_login(user_dto: UserDto):
     access_token = token_handler.create_access_token(str(result.id))
     refresh_token = token_handler.create_refresh_token(str(result.id))
     await db.refreshtokens.upsert(
-        where={"id": {str(result.id)}},
+        where={"id": f"{result.id}.refresh"},
         data={
-            "create": {"id": {str(result.id)}, "token": refresh_token},
+            "create": {"id": f"{result.id}.refresh", "token": refresh_token},
             "update": {"token": refresh_token},
         },
     )
@@ -65,7 +65,7 @@ async def get_refreshed_token(refresh_token: str):
             "id": sub,
         }
     )
-    access_token = tokenHandler.create_access_token(result.id)
+    access_token = tokenHandler.create_access_token((result.id.replace(".refresh", "")))
     return JSONResponse(
         status_code=200,
         content={"access_token": access_token, "refresh_token": refresh_token},
