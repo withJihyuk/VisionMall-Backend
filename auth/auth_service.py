@@ -46,7 +46,7 @@ async def register_or_login(user_dto: UserDto):
     await db.refreshtokens.upsert(
         where={"id": f"{result.id}.refresh"},
         data={
-            "create": {"id": f"{result.id}.refresh", "token": refresh_token},
+            "create": {"id": {result.id}, "token": refresh_token},
             "update": {"token": refresh_token},
         },
     )
