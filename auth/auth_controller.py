@@ -1,6 +1,7 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 import auth.auth_service as auth
 from auth.common.dto.refresh_token_dto import RefreshTokenDto
+from utils.token_handler import check_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
@@ -21,4 +22,6 @@ async def get_refresh_token(request: RefreshTokenDto):
     return await auth.get_refreshed_token(request.refresh_token)
 
 
-# TODO - 유저 정보 엔드포인트 제작하기
+@router.get("/info")
+async def get_user_info(user_id: str = Depends(check_user)):
+    return await auth.get_current_user(user_id)
