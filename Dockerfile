@@ -7,5 +7,3 @@ COPY . /app
 RUN pip install -r requirements.txt
 
 RUN prisma generate
-
-RUN prisma db push
