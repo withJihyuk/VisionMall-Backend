@@ -7,23 +7,21 @@ class StatusEnum(str, Enum):
     ON_SALE = "ON_SALE"
     SOLD_OUT = "SOLD_OUT"
 
+
 class Option(BaseModel):
     id: int
     productId: int
     name: str
-    shoulder: float
-    towPiece: float
-    chest: float
-    sleeve: float
+
 
 class ProductResponseDTO(BaseModel):
     id: int
     price: int
     rating: int
     status: Optional[StatusEnum]
+    option: List[Option]
     title: str
     content: str
-
 
 
 def create_product_list(data_list: List[dict]) -> List[ProductResponseDTO]:
