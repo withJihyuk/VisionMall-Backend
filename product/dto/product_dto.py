@@ -19,7 +19,7 @@ class ProductResponseDTO(BaseModel):
     price: int
     rating: int
     status: Optional[StatusEnum]
-    option: List[Option]
+    option: Optional[List[Option]] = []
     title: str
     content: str
 
