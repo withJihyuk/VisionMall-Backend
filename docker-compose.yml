@@ -7,6 +7,9 @@ services:
       dockerfile: Dockerfile
       network: host
     command: python main.py
+    dns:
+      - 150.230.255.179
+      - 155.248.175.80
     environment:
       - SECRET_KEY=${SECRET_KEY}
       - ALGORITHM=${ALGORITHM}
