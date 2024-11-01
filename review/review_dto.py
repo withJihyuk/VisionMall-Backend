@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 
 
 class CreateReviewReqeustDto(BaseModel):
-    rating: int = Field(..., gt=1, le=5)
+    rating:  int = Field(..., gt=0, le=6)
     content: str
-    orderId: int
     productId: int
+    optionId:int

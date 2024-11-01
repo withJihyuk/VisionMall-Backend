@@ -9,13 +9,14 @@ async def create_review(request: CreateReviewReqeustDto, user_id: int):
             data={
                 "rating": request.rating,
                 "content": request.content,
-                "orderId": request.orderId,
-                "userId": user_id,
+                "optionId": request.optionId,
                 "productId": request.productId,
+                "userId": user_id,
             }
         )
         return JSONResponse(status_code=200, content={"status": "ok"})
-    except Exception:
+    except Exception as e:
+        print(e)
         return JSONResponse(status_code=400, content={"message": "잘못된 요청입니다."})
 
 
