@@ -24,9 +24,9 @@ class TokenHandler:
         return jwt.encode(payload, self.secret, self.algorithm)
 
     def decode_token(self, token: str):
-            payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
-            print(payload)
-            return payload["sub"]
+        payload = jwt.decode(token, self.secret, algorithms=[self.algorithm])
+        print(payload)
+        return payload["sub"]
 
     def create_access_token(self, user_id: str):
         sub = user_id
