@@ -3,17 +3,17 @@ from common.db import db
 from order.order_dto import CreateOrderReqeustDto
 
 
-async def get_order_list(user_id: int):
-    return await db.orders.find_many(where={"userId": user_id})
+async def get_order_list(user_id: str):
+    return await db.orders.find_many(where={"userId": int(user_id)})
 
 
-async def create_order(request: CreateOrderReqeustDto, user_id: int):
+async def create_order(request: CreateOrderReqeustDto, user_id: str):
     try:
         await db.orders.create(
             data={
                 "count": request.count,
                 "status": request.status,
-                "userId": user_id,
+                "userId": int(user_id),
                 "optionId": request.optionId,
                 "productId": request.productId,
                 "zipCode": request.zipCode,
@@ -23,9 +23,7 @@ async def create_order(request: CreateOrderReqeustDto, user_id: int):
     except Exception:
         return JSONResponse(
             status_code=400,
-            content={
-                "message": "요청에 실패했습니다. 요청이 올바른지 확인 해주세요."
-            }
+            content={"message": "요청에 실패했습니다. 요청이 올바른지 확인 해주세요."},
         )
     return JSONResponse(status_code=200, content={"status": "ok"})
 
