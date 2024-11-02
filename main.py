@@ -2,6 +2,8 @@ from fastapi import FastAPI
 import uvicorn
 from contextlib import asynccontextmanager
 
+from fastapi.middleware.cors import CORSMiddleware
+
 from auth import auth_controller as auth
 from product import product_controller as board
 from review import review_controller as review
@@ -27,6 +29,18 @@ app.include_router(review.router)
 app.include_router(board.router)
 app.include_router(analyze.router)
 app.include_router(order.router)
+
+origins = [
+    "*",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def root():
