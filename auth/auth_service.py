@@ -1,29 +1,19 @@
 from google.oauth2 import id_token
 from google.auth.transport import requests
 from starlette.responses import JSONResponse
-from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from fastapi import Depends
+from fastapi.security import HTTPBearer
 from common.exception import unauthorized
 from common.db import db
 from utils.token_handler import TokenHandler
 from auth.common.dto.user_dto import UserDto, create_oauth_dto
-from auth.common.config import flow, client_id, redirect_url
+from auth.common.config import client_id
 
 security = HTTPBearer()
 
-
-def get_login_url():
-    flow.redirect_uri = redirect_url
-    auth_url, _ = flow.authorization_url(prompt="consent")
-    return auth_url
-
-
-def verify_id_token(auth_code: str):
+def verify_by_token(token: str):
     try:
-        flow.fetch_token(code=auth_code)
-        credentials = flow.credentials
         token_val = id_token.verify_oauth2_token(
-            credentials.id_token,
+            token,
             requests.Request(),
             client_id,
             clock_skew_in_seconds=0,

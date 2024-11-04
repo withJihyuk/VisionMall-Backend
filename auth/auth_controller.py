@@ -5,16 +5,9 @@ from utils.token_handler import check_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
-
-@router.get("/verify")
-async def verify_id_token(code: str):
-    value = await auth.verify_id_token(code)
-    return value
-
-
-@router.get("/login")
-async def get_login_link():
-    return auth.get_login_url()
+@router.post("/token")
+async def verify_by_token(id_token: str):
+    return await auth.verify_by_token(id_token)
 
 
 @router.post("/refresh")
