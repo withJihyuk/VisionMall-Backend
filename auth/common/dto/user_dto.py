@@ -25,6 +25,6 @@ class UserResponseDto(BaseModel):
     email: str
     name: str
     picture: str
-    address: Optional[str]
-    reviews: Optional[CreateReviewReqeustDto] = []
-    order: Optional[CreateOrderReqeustDto] = []
+    address: Optional[str] = "등록되지 않았습니다."
+    reviews: list[CreateReviewReqeustDto] = []
+    order: list[CreateOrderReqeustDto] = []
