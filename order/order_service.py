@@ -1,3 +1,4 @@
+from prisma.enums import OrderStatus
 from starlette.responses import JSONResponse
 from common.db import db
 from order.order_dto import CreateOrderReqeustDto
@@ -12,7 +13,7 @@ async def create_order(request: CreateOrderReqeustDto, user_id: str):
         await db.orders.create(
             data={
                 "count": request.count,
-                "status": request.status,
+                "status": OrderStatus.PENDING,
                 "userId": int(user_id),
                 "optionId": request.optionId,
                 "productId": request.productId,
