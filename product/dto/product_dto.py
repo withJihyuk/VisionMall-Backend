@@ -22,6 +22,7 @@ class ProductResponseDTO(BaseModel):
     option: Optional[List[Option]] = []
     title: str
     content: str
+    images: List[str]
 
 
 def create_product_list(data_list: List[dict]) -> List[ProductResponseDTO]:
@@ -33,6 +34,7 @@ def create_product_list(data_list: List[dict]) -> List[ProductResponseDTO]:
             status=item.status,
             title=item.title,
             content=item.content,
+            images=item.images,
         )
         for item in data_list
     ]

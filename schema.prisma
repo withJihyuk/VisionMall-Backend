@@ -37,6 +37,7 @@ model Products {
   rating    Float
   title     String
   content   String
+  images    String[]
   status    ProductStatus
   review    Reviews[]
   order     Orders[]
