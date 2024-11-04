@@ -1,13 +1,14 @@
 from fastapi import APIRouter, Depends
 import auth.auth_service as auth
+from auth.common.dto.id_token_dto import IdTokenDto
 from auth.common.dto.refresh_token_dto import RefreshTokenDto
 from utils.token_handler import check_user
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 
 @router.post("/token")
-async def verify_by_token(id_token: str):
-    return await auth.verify_by_token(id_token)
+async def verify_by_token(id_token: IdTokenDto):
+    return await auth.verify_by_token(id_token.token)
 
 
 @router.post("/refresh")
