@@ -1,10 +1,12 @@
 from fastapi import FastAPI
 import uvicorn
 from contextlib import asynccontextmanager
+import sentry_sdk
 
 from fastapi.middleware.cors import CORSMiddleware
 
 from auth import auth_controller as auth
+from auth.common.config import sentry_dsn
 from product import product_controller as board
 from review import review_controller as review
 from analyze import analyze_controller as analyze
@@ -21,6 +23,11 @@ async def lifespan(app: FastAPI):
     await disconnect_db()
     print("DB 연결 종료 성공")
 
+sentry_sdk.init(
+    dsn=sentry_dsn,
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+)
 
 app = FastAPI(lifespan=lifespan)
 
