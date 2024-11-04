@@ -1,4 +1,9 @@
+from typing import Optional
+
 from pydantic import BaseModel
+
+from order.order_dto import CreateOrderReqeustDto
+from review.review_dto import CreateReviewReqeustDto
 
 
 class UserDto(BaseModel):
@@ -15,3 +20,11 @@ def create_oauth_dto(data: dict) -> UserDto:
         name=data["given_name"],
         picture=data["picture"],
     )
+
+class UserResponseDto(BaseModel):
+    email: str
+    name: str
+    picture: str
+    address: Optional[str]
+    reviews: Optional[CreateReviewReqeustDto] = []
+    order: Optional[CreateOrderReqeustDto] = []

@@ -16,7 +16,6 @@ model Users {
   email       String   @unique
   name        String
   picture     String
-  zipCode     String?
   address     String?
   reviews     Reviews[]
   order       Orders[]
@@ -76,7 +75,6 @@ model Orders {
   productId Int
   option    Options      @relation(fields: [optionId], references: [id])
   optionId  Int
-  zipCode   String
   address   String
 }
 

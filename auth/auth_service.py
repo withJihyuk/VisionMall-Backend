@@ -63,5 +63,5 @@ async def get_refreshed_token(refresh_token: str):
 
 
 async def get_current_user(user_id: str):
-    result = await db.users.find_unique(where={"id": int(user_id)})
+    result = await db.users.find_unique(where={"id": int(user_id)}, include={"order": True, "reviews": True})
     return result

@@ -16,7 +16,6 @@ async def create_order(request: CreateOrderReqeustDto, user_id: str):
                 "userId": int(user_id),
                 "optionId": request.optionId,
                 "productId": request.productId,
-                "zipCode": request.zipCode,
                 "address": request.address,
             }
         )
