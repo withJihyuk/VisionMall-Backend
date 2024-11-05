@@ -12,7 +12,7 @@ security = HTTPBearer()
 class TokenHandler:
     secret = os.environ.get("SECRET_KEY")
     algorithm = os.environ.get("ALGORITHM")
-    access_expires = timedelta(hours=2)
+    access_expires = timedelta(days=5)
     refresh_expires = timedelta(days=14)
 
     def encode_token(self, sub: str, expires: timedelta):
